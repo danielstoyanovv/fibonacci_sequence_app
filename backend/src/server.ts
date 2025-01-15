@@ -58,11 +58,11 @@ app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", async (req: Re
     try {
         const values = redisClient.hGetAll("values")
         values.then(function (result: any) {
-            res.status(200).json({
-                status: STATUS_SUCCESS,
-                data: result,
-                message: ""
-            })
+        res.status(200).json({
+            status: STATUS_SUCCESS,
+            data: result,
+            message: ""
+        })
         })
     } catch (error) {
         console.log(error)
