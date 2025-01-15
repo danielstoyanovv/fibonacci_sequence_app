@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Fib from "./Fib";
+import OtherPage from "./pages/OtherPage";
 import Navbar from "./components/Navbar";
 function App() {
     return (
@@ -13,6 +14,12 @@ function App() {
                             element={<Fib/>}
                         >
                         </Route>
+                        <Route
+                            path="/other-page"
+                            element={<OtherPage/>}
+                        >
+                        </Route>
+
                     </Routes>
                 </div>
             </BrowserRouter>
