@@ -17,8 +17,12 @@ import {
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
 
-pgClient
-    .query('CREATE TABLE IF NOT EXISTS values (number INT)')
+pgClient.on("connect", (client: any) => {
+    console.log("Postgres database is connected")
+    client
+        .query('CREATE TABLE IF NOT EXISTS values (number INT)')
+        .catch((err: any) => console.error(err));
+});
 
 const app = express()
 
@@ -55,23 +59,21 @@ app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Reques
     }
 });
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", async (req: Request, res: Response) => {
-    try {
-        const values = redisClient.hGetAll("values")
-        values.then(function (result: any) {
-            res.status(200).json({
-                status: STATUS_SUCCESS,
-                data: result,
-                message: ""
-            })
+    const values = redisClient.hGetAll("values")
+    values.then((result: any) => {
+        res.status(200).json({
+            status: STATUS_SUCCESS,
+            data: result,
+            message: ""
         })
-    } catch (error) {
+    }).catch((error: any) => {
         console.log(error)
         res.status(500).json({
             status: STATUS_ERROR,
             data: [],
             message: INTERNAL_SERVER_ERROR
         });
-    }
+    })
 });
 
 app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, res: Response) => {
