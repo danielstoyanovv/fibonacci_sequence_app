@@ -1,9 +1,8 @@
 "use strict";
 
 import express from "express"
-import {config} from "dotenv"
-config()
-const pgClient = require('./config/pgClient');
+require('dotenv').config();
+import pgClient from "./config/pgClient";
 import { Request, Response } from "express"
 import {RedisServerService} from "./services/RedisServerService";
 import {FibonacciSequenceService} from "./services/FibonacciSequenceService";
@@ -16,7 +15,6 @@ import {
 
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
-
 pgClient.on("connect", (client: any) => {
     console.log("Postgres database is connected")
     client

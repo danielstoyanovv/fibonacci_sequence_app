@@ -3,7 +3,8 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const  pgClient = new Pool({
+// Postgres Client Setup
+const pgClient = new Pool({
     user: process.env.PG_USER || "postgres",
     host: process.env.PG_HOST || "127.0.0.1",
     database: process.env.PG_DB || "application",
@@ -14,7 +15,4 @@ const  pgClient = new Pool({
             ? false
             : { rejectUnauthorized: false },
 });
-
-module.exports = {
-    query: (text: any, params: any) => pgClient.query(text, params)
-};
+export default pgClient
