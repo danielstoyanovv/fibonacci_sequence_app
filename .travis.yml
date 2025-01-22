@@ -4,9 +4,8 @@ services:
   - docker
 
 before_install:
-  - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
+  - docker build -t stoyanov1234/fib -f ./server/Dockerfile.dev ./server
   - docker build -t stoyanov1234/fib
-  .
   - docker build -t stoyanov1234/fib  ./client
   - docker build -t stoyanov1234/fib  ./server
 
@@ -17,7 +16,7 @@ before_install:
   - docker push stoyanov1234/fib-server
 
 script:
-  - docker run danielstoyanovv/fib npm test
+  - docker run stoyanov1234/fib npm test
 #
 #after_success:
 #  - docker build -t danielstoyanovv/fib-nginx ./nginx
