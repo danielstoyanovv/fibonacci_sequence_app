@@ -5,7 +5,7 @@ services:
 
 before_install:
   - docker build -t stoyanov1234/fib -f ./server/Dockerfile.dev ./server
-  - docker build -t stoyanov1234/fib
+
   - docker build -t stoyanov1234/fib  ./client
   - docker build -t stoyanov1234/fib  ./server
 
