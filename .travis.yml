@@ -5,9 +5,17 @@ services:
 
 before_install:
   - docker build -t stoyanov1234/fib -f ./server/Dockerfile.dev ./server
+  - docker build -t stoyanov1234/fib .
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+
+
 
 script:
-  - docker run stoyanov1234/fib npm test
+   - docker push stoyanov1234/fib
+
+#  - docker run stoyanov1234/fib npm test
 #
 #after_success:
 #  - docker build -t danielstoyanovv/fib-nginx ./nginx
