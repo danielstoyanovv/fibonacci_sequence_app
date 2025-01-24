@@ -9,7 +9,7 @@ before_install:
 
   - docker build -t stoyanov1234/fib-server  ./server
   - cd client
-  - docker build -t stoyanov1234/fib-client .
+  - docker build -t stoyanov1234/fib-client f Dockerfile.dev .
 
 
 script:
