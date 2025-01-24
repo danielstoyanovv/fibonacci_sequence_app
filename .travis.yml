@@ -10,22 +10,8 @@ before_install:
   - docker build -t stoyanov1234/fib-server  ./server
   - cd client
   - docker build -t stoyanov1234/fib-client -f Dockerfile.dev .
-
-
 script:
    - docker push stoyanov1234/fib-server
    - docker push stoyanov1234/fib-client
-#  - docker run danielstoyanovv/fib npm test
-#
-#after_success:
-#  - docker build -t danielstoyanovv/fib-nginx ./nginx
-#  - docker build -t danielstoyanovv/fib-client ./client
-#  - docker build -t danielstoyanovv/fib-server ./server
-#
-#  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-#
-#  - docker push danielstoyanovv/fib-nginx
-#  - docker push danielstoyanovv/fib-client
-#  - docker push danielstoyanovv/fib-server
-
-
+after_success:
+  - docker run danielstoyanovv/fib npm test
