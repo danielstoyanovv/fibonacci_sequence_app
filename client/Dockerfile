@@ -11,4 +11,4 @@ COPY . .
 RUN npm run build
 
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY /app /usr/share/nginx/html
