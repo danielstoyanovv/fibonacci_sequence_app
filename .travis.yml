@@ -6,7 +6,8 @@ services:
 before_install:
   - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
   - docker build -t stoyanov1234/fib-server  ./server
-  - docker build -t stoyanov1234/fib-client  ./client
+  - cd client
+    - docker build -t stoyanov1234/fib-client .
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
