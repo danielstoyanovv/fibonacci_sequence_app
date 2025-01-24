@@ -13,5 +13,4 @@ before_install:
 script:
    - docker push stoyanov1234/fib-server
    - docker push stoyanov1234/fib-client
-after_success:
-  - docker run danielstoyanovv/fib npm test
+   - docker run danielstoyanovv/fib npm test
