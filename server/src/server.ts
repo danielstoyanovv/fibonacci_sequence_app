@@ -9,9 +9,13 @@ import {FibonacciSequenceService} from "./services/FibonacciSequenceService";
 import {number} from "./controllers/fibonacciSequenceController";
 import cors from "cors"
 import {
-    INTERNAL_SERVER_ERROR,
-    STATUS_ERROR,
-    STATUS_SUCCESS} from "./constants/data";
+    STATUS_UNPROCESSABLE_ENTITY,
+    STATUS_OK,
+    STATUS_INTERNAL_SERVER_ERROR,
+    MESSEGE_ERROR,
+    MESSEGE_SUCCESS,
+    MESSEGE_INTERNAL_SERVER_ERROR
+} from "./constants/data";
 
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
@@ -42,34 +46,34 @@ app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Reques
     try {
         const values = await pgClient
             .query('SELECT * from values')
-        res.status(200).json({
-            status: STATUS_SUCCESS,
+        res.status(STATUS_OK).json({
+            status: MESSEGE_SUCCESS,
             data: values.rows,
             message: ""
         })
     } catch (error) {
         console.log(error)
-        res.status(500).json({
-            status: STATUS_ERROR,
+        res.status(STATUS_INTERNAL_SERVER_ERROR).json({
+            status: MESSEGE_ERROR,
             data: [],
-            message: INTERNAL_SERVER_ERROR
+            message: MESSEGE_INTERNAL_SERVER_ERROR
         });
     }
 });
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", async (req: Request, res: Response) => {
     const values = redisClient.hGetAll("values")
     values.then((result: any) => {
-        res.status(200).json({
-            status: STATUS_SUCCESS,
+        res.status(STATUS_OK).json({
+            status: MESSEGE_SUCCESS,
             data: result,
             message: ""
         })
     }).catch((error: any) => {
         console.log(error)
-        res.status(500).json({
-            status: STATUS_ERROR,
+        res.status(STATUS_INTERNAL_SERVER_ERROR).json({
+            status: MESSEGE_ERROR,
             data: [],
-            message: INTERNAL_SERVER_ERROR
+            message: MESSEGE_INTERNAL_SERVER_ERROR
         });
     })
 });
@@ -78,25 +82,25 @@ app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, 
     try {
         const number = req.body.number
         if (parseInt(number) > 40) {
-            return res.status(422).json({
-                status: STATUS_ERROR,
+            return res.status(STATUS_UNPROCESSABLE_ENTITY).json({
+                status: MESSEGE_ERROR,
                 data: [],
                 message: "number is too high"
             })
         }
         redisClient.hSet('values', number, fibonacciSequenceService.fib(number));
         pgClient.query('INSERT INTO values(number) VALUES ($1)', [number])
-        return res.status(200).json({
-            status: STATUS_SUCCESS,
+        return res.status(STATUS_OK).json({
+            status: MESSEGE_SUCCESS,
             data: [],
             message: ""
         })
     } catch (error) {
         console.log(error)
-        res.status(500).json({
-            status: STATUS_ERROR,
+        res.status(STATUS_INTERNAL_SERVER_ERROR).json({
+            status: MESSEGE_ERROR,
             data: [],
-            message: INTERNAL_SERVER_ERROR
+            message: MESSEGE_INTERNAL_SERVER_ERROR
         });
     }
 
