@@ -2,7 +2,8 @@
 
 import express from "express"
 require('dotenv').config();
-import pgClient from "./config/pgClient";
+require("pg" )
+const database = require("./config/Database")
 import { Request, Response } from "express"
 import {RedisServerService} from "./services/RedisServerService";
 import {FibonacciSequenceService} from "./services/FibonacciSequenceService";
@@ -16,10 +17,9 @@ import {
     MESSEGE_SUCCESS,
     MESSEGE_INTERNAL_SERVER_ERROR
 } from "./constants/data";
-
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
-pgClient.on("connect", (client: any) => {
+database.on("connect", (client: any) => {
     console.log("Postgres database is connected")
     client
         .query('CREATE TABLE IF NOT EXISTS values (number INT)')
@@ -44,8 +44,8 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Request, res: Response) => {
     try {
-        const values = await pgClient
-            .query('SELECT * from values')
+        const values = await database
+            .query('SELECT * from values', null)
         res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
             data: values.rows,
@@ -89,7 +89,7 @@ app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, 
             })
         }
         redisClient.hSet('values', number, fibonacciSequenceService.fib(number));
-        pgClient.query('INSERT INTO values(number) VALUES ($1)', [number])
+        database.query('INSERT INTO values(number) VALUES ($1)', [number])
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
             data: [],
