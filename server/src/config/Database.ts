@@ -3,6 +3,7 @@
 import {Pool} from "pg";
 require('dotenv').config();
 class Database {
+    private static _instance: Database;
     constructor() {
         // Postgres Client Setup
         const DB_NAME = process.env.NODE_ENV === 'test' ? process.env.PG_DB +  "_test" : process.env.PG_DB
@@ -15,6 +16,14 @@ class Database {
         })
         console.log("Database connection initialized");
     }
-}
-module.exports = new Database();
 
+    static getInstance() {
+        if (this._instance) {
+            return this._instance;
+        }
+
+        this._instance = new Database();
+        return this._instance;
+    }
+}
+module.exports = Database
