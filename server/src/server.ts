@@ -2,7 +2,6 @@
 
 import express from "express"
 require('dotenv').config();
-require("pg" )
 import database from "./config/database";
 import { Request, Response } from "express"
 import {RedisServerService} from "./services/RedisServerService";
