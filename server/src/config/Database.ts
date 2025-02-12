@@ -16,7 +16,10 @@ class Database {
         })
         console.log("Database connection initialized");
     }
-
+    /**
+     * Get only 1 instance constantly
+     * @return {object}
+     */
     static getInstance() {
         if (this._instance) {
             return this._instance;
