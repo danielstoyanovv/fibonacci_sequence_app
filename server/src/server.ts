@@ -19,7 +19,7 @@ import {
 } from "./constants/data";
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
-database.on("connect", (client: any) => {
+database.getInstance.on("connect", (client: any) => {
     console.log("Postgres database is connected")
     client
         .query('CREATE TABLE IF NOT EXISTS values (number INT)')
@@ -44,7 +44,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Request, res: Response) => {
     try {
-        const values = await database
+        const values = await database.getInstance
             .query('SELECT * from values', null)
         res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
@@ -89,7 +89,7 @@ app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, 
             })
         }
         redisClient.hSet('values', number, fibonacciSequenceService.fib(number));
-        database.query('INSERT INTO values(number) VALUES ($1)', [number])
+        database.getInstance.query('INSERT INTO values(number) VALUES ($1)', [number])
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
             data: [],
