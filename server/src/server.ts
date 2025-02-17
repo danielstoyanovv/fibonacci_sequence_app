@@ -88,8 +88,8 @@ app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, 
                 message: "number is too high"
             })
         }
-        redisClient.hSet('values', number, fibonacciSequenceService.fib(number));
-        database.query('INSERT INTO values(number) VALUES ($1)', [number])
+        await redisClient.hSet('values', number, fibonacciSequenceService.fib(number));
+        await database.query('INSERT INTO values(number) VALUES ($1)', [number])
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
             data: [],
