@@ -20,7 +20,6 @@ import {
 const redisClient = new RedisServerService().getRedisClient
 const fibonacciSequenceService = new FibonacciSequenceService
 database.on("connect", (client: any) => {
-
     console.log("Postgres database established")
     client
         .query('CREATE TABLE IF NOT EXISTS values (number INT)')
@@ -38,10 +37,6 @@ app.use(express.json())
 app.use(cors())
 
 app.post("/" + API_PREFIX + "/" + API_VERSION + "/fibonacci-sequence-index-number", number)
-
-app.get('/', (req: Request, res: Response) => {
-    res.json({mssg: 'Welcome to the app'})
-})
 
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Request, res: Response) => {
     try {
@@ -61,26 +56,24 @@ app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", async (req: Reques
     }
 });
 app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", async (req: Request, res: Response) => {
-    const values = redisClient.hGetAll("values")
-    values.then((result: any) => {
+    const values = await redisClient.hGetAll("values")
+    try {
         res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
-            data: result,
+            data: values,
             message: ""
         })
-    }).catch((error: any) => {
-        console.log(error)
+    } catch (error) {
         res.status(STATUS_INTERNAL_SERVER_ERROR).json({
             status: MESSEGE_ERROR,
-            data: [],
-            message: MESSEGE_INTERNAL_SERVER_ERROR
-        });
-    })
+            data: []
+        })
+    }
 });
 
 app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", async (req: Request, res: Response) => {
     try {
-        const number = req.body.number
+        const { number } = req.body
         if (parseInt(number) > 40) {
             return res.status(STATUS_UNPROCESSABLE_ENTITY).json({
                 status: MESSEGE_ERROR,
