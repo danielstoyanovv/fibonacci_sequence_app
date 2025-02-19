@@ -29,4 +29,9 @@ spec:
                         -   name: PG_PORT
                             value: "5432"
                         -   name: PG_DB
-                            value: oneday
+                            value: postgres
+                        -   name: POSTGRES_PASSWORD
+                            valueFrom:
+                                secretKeyRef:
+                                    name: postgres-password
+                                    key: POSTGRES_PASSWORD
