@@ -8,7 +8,7 @@ before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   - docker build -t stoyanov1234/fib-server -f ./server/Dockerfile.dev ./server
-  - docker build -t stoyanov1234/fib-client -f Dockerfile.dev ./client
+  - docker build -t stoyanov1234/fib-client -f ./client/Dockerfile.dev ./client
 script:
    - docker push stoyanov1234/fib-server
    - docker push stoyanov1234/fib-client
