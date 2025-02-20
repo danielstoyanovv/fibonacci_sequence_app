@@ -9,10 +9,10 @@ before_install:
 
 #  - docker build -t stoyanov1234/fib-server  ./server
   - docker build -t stoyanov1234/fib-server ./server
-  - cd client
-  - docker build -t stoyanov1234/fib-client .
+#  - cd client
+#  - docker build -t stoyanov1234/fib-client .
 script:
    - docker push stoyanov1234/fib-server
-   - docker push stoyanov1234/fib-client
+#   - docker push stoyanov1234/fib-client
 after_success:
    - docker run danielstoyanovv/fib npm test
