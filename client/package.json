@@ -1,7 +1,6 @@
 {
-  "homepage": "/",
   "proxy": "http://localhost:4000",
-  "name": "client",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
