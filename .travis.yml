@@ -7,12 +7,10 @@ before_install:
   - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-#  - docker build -t stoyanov1234/fib-server  ./server
   - docker build -t stoyanov1234/fib-server ./server
-#  - cd client
-#  - docker build -t stoyanov1234/fib-client .
+  - docker build -t stoyanov1234/fib-client ./client
 script:
    - docker push stoyanov1234/fib-server
-#   - docker push stoyanov1234/fib-client
+   - docker push stoyanov1234/fib-client
 after_success:
    - docker run danielstoyanovv/fib npm test
