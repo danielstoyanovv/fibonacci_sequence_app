@@ -12,6 +12,7 @@ import {
 import cors from "cors"
 import {getDatabaseValuesFromCacheMiddleware} from "./middlewares/getDatabaseValuesFromCacheMiddleware";
 import {LoggerService} from "./services/LoggerService";
+import helmet from "helmet";
 
 const logger = new LoggerService().createLogger()
 database.on("connect", (client: any) => {
@@ -34,6 +35,8 @@ const API_VERSION = process.env.API_VERSION || "v1"
 app.use(express.json())
 
 app.use(cors())
+
+app.use(helmet())
 
 app.post("/" + API_PREFIX + "/" + API_VERSION + "/fibonacci-sequence-index-number", number)
 
