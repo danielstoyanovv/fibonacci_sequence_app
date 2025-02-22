@@ -83,7 +83,7 @@ export const createValue = async ( req: Request,  res: Response) => {
         }
         await redisClient.hSet("values", number, fibonacciSequenceService.fib(number));
         await database.query('INSERT INTO values(number) VALUES ($1)', [number])
-        redisClient.del("databaseValues")
+        await redisClient.del("databaseValues")
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
             data: [],
