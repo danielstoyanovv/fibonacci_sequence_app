@@ -10,7 +10,7 @@ import {
     createValue
 } from "./controllers/fibonacciSequenceController";
 import cors from "cors"
-import {getDatabaseValuesFromCacheMiddleware} from "./middleware/getDatabaseValuesFromCacheMiddleware";
+import {getDatabaseValuesFromCacheMiddleware} from "./middlewares/getDatabaseValuesFromCacheMiddleware";
 database.on("connect", (client: any) => {
     console.log("Postgres database established")
     client
