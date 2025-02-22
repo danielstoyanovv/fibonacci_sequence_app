@@ -12,8 +12,10 @@ import {
 import {FibonacciSequenceService} from "../services/FibonacciSequenceService";
 import database from "../config/database";
 import {RedisServerService} from "../services/RedisServerService";
+import {LoggerService} from "../services/LoggerService";
 
 const redisClient = new RedisServerService().getRedisClient
+const logger = new LoggerService().createLogger()
 
 const fibonacciSequenceService = new FibonacciSequenceService
 
@@ -29,6 +31,7 @@ export const number = async ( req: Request,  res: Response) => {
             message: ""
         })
     } catch (error) {
+        logger.error(error)
         res.status(STATUS_INTERNAL_SERVER_ERROR).json({
             status: MESSEGE_ERROR,
             data: [],
@@ -46,7 +49,7 @@ export const values = async ( req: Request,  res: Response) => {
             message: ""
         })
     } catch (error) {
-        console.log(error)
+        logger.error(error)
         res.status(STATUS_INTERNAL_SERVER_ERROR).json({
             status: MESSEGE_ERROR,
             data: [],
@@ -64,7 +67,7 @@ export const current = async ( req: Request,  res: Response) => {
         })
 
     } catch (error) {
-        console.log(error)
+        logger.error(error)
         res.status(STATUS_INTERNAL_SERVER_ERROR).json({
             status: MESSEGE_ERROR,
             data: []
@@ -90,7 +93,7 @@ export const createValue = async ( req: Request,  res: Response) => {
             message: ""
         })
     } catch (error) {
-        console.log(error)
+        logger.error(error)
         res.status(STATUS_INTERNAL_SERVER_ERROR).json({
             status: MESSEGE_ERROR,
             data: [],

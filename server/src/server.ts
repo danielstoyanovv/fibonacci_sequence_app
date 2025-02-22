@@ -11,11 +11,18 @@ import {
 } from "./controllers/fibonacciSequenceController";
 import cors from "cors"
 import {getDatabaseValuesFromCacheMiddleware} from "./middlewares/getDatabaseValuesFromCacheMiddleware";
+import {LoggerService} from "./services/LoggerService";
+
+const logger = new LoggerService().createLogger()
 database.on("connect", (client: any) => {
     console.log("Postgres database established")
-    client
-        .query('CREATE TABLE IF NOT EXISTS values (number INT)')
-        .catch((err: any) => console.error(err));
+    try {
+        client.query('CREATE TABLE IF NOT EXISTS values (number INT)')
+    } catch (error) {
+        console.log(error)
+        logger.error(error)
+    }
+
 });
 
 const app = express()
