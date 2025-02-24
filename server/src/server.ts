@@ -17,13 +17,9 @@ import helmet from "helmet";
 const logger = new LoggerService().createLogger()
 database.on("connect", (client: any) => {
     console.log("Postgres database established")
-    try {
-        client.query('CREATE TABLE IF NOT EXISTS values (number INT)')
-    } catch (error) {
-        console.log(error)
-        logger.error(error)
-    }
-
+    client
+        .query('CREATE TABLE IF NOT EXISTS values (number INT)')
+        .catch((err: any) => logger.error(err));
 });
 
 const app = express()
