@@ -2,6 +2,9 @@
 
 const { Pool } = require('pg');
 require('dotenv').config();
+import {LoggerService} from "./services/LoggerService";
+
+const logger = new LoggerService().createLogger()
 
 const DB_NAME = process.env.NODE_ENV === 'test' ? process.env.PG_DB +  "_test" : process.env.PG_DB
 // Postgres Client Setup
@@ -18,4 +21,4 @@ const client = new Pool({
 });
 client
     .query(`CREATE DATABASE ` + DB_NAME)
-    .catch((err: any) => console.error(err))
+    .catch((err: any) => logger.error(err))
