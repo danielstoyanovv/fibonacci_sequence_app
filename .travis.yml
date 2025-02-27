@@ -12,13 +12,13 @@ before_install:
   - travis_wait gcloud config set compute/zone europe-central2-c
   - travis_wait gcloud container clusters get-credentials multi-cluster
 
-  - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - travis_wait docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
+  - travis_wait echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker build -t stoyanov1234/fib-server -f ./server/Dockerfile.dev  ./server
-  - docker build -t stoyanov1234/fib-client ./client
+  - travis_wait docker build -t stoyanov1234/fib-server -f ./server/Dockerfile.dev  ./server
+  - travis_wait docker build -t stoyanov1234/fib-client ./client
 script:
-   - docker push stoyanov1234/fib-server
-   - docker push stoyanov1234/fib-client
+   - travis_wait docker push stoyanov1234/fib-server
+   - travis_wait docker push stoyanov1234/fib-client
 after_success:
-   - docker run danielstoyanovv/fib npm test
+   - travis_wait docker run danielstoyanovv/fib npm test
