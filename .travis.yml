@@ -13,7 +13,7 @@ before_install:
   - docker pull google/cloud-sdk
   - docker run --rm google/cloud-sdk gcloud --version
 #  - curl https://sdk.cloud.google.com | bash > /dev/null
-  - source $HOME/google-cloud-sdk/path.bash.inc
+#  - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud --quiet components update
   - echo "$GCLOUD_SERVICE_KEY" | base64 --decode > service-account.json
   - gcloud auth activate-service-account --key-file service-account.json
