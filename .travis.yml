@@ -10,7 +10,7 @@ env:
 before_install:
 #  - while sleep 30; do echo "Still working..."; done &
   - openssl aes-256-cbc -K $encrypted_9f3b5599b056_key -iv $encrypted_9f3b5599b056_iv -in ./ruby/service-account.json.enc -out ./ruby/service-account.json -d
-  - curl https://sdk.cloud.google.com | bash > /dev/null;
+#  - curl https://sdk.cloud.google.com | bash > /dev/null;
 #  - source $HOME/google-cloud-sdk/path.bash.inc
   - travis_wait 30 gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
