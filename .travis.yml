@@ -44,9 +44,9 @@ script:
    - docker push stoyanov1234/fib-client:$SHA
 after_success:
    - docker run danielstoyanovv/fib npm test
-#
-#deploy:
-#    provider: script
-#    script: bash ./deploy.sh
-#    on:
-#        branch: main
+
+deploy:
+    provider: script
+    script: bash ./deploy.sh
+    on:
+        branch: main
