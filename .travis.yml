@@ -14,7 +14,7 @@ before_install:
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud --quiet components update
   - echo "$GCLOUD_SERVICE_KEY" | base64 --decode > service-account.json
-  - gcloud auth activate-service-account --key-file=service-account.json
+  - gcloud auth activate-service-account --key-file service-account.json
   - gcloud components update kubectl
 
   - gcloud config set project multi-k8s-451610
