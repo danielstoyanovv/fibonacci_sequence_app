@@ -30,7 +30,7 @@ script:
   - docker push stoyanov1234/fib-server:$SHA
   - docker push stoyanov1234/fib-client:$SHA
 before_deploy:
-  - set -x  # Enable debugging
+#  - set -x  # Enable debugging
   - echo "Starting deployment..."
 deploy:
   provider: script
