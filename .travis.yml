@@ -14,7 +14,7 @@ before_install:
   - gcloud --version
   - gcloud auth activate-service-account --key-file ./ruby/service-account.json
   - gcloud auth configure-docker    # enable "docker push" to gcr
-  - gcloud components install beta  # until Cloud Run is generally available (GA)
+#  - gcloud components install beta  # until Cloud Run is generally available (GA)
 #  - gcloud components update kubectl
 
   - gcloud config set project multi-k8s-451610
