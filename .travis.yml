@@ -15,7 +15,7 @@ before_install:
 #  - gcloud components update kubectl
 
   - gcloud config set project multi-k8s-451610
-  - gcloud config set compute/zone europe-central2-c
+#  - gcloud config set compute/zone europe-central2-c
   - gcloud container clusters get-credentials multi-cluster
   - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
