@@ -12,8 +12,8 @@ before_install:
   - gcloud auth activate-service-account --key-file ./ruby/service-account.json
   - gcloud --quiet config set project multi-k8s-451610
   - gcloud --quiet config set container/cluster multi-cluster
-  - gcloud  -quiet config set compute/zone europe-central2-c
-  - gcloud container clusters get-credentials multi-cluster
+  - gcloud --quiet config set compute/zone europe-central2-c
+  - gcloud --quiet container clusters get-credentials multi-cluster
 
   - docker build -t danielstoyanovv/fib -f ./server/Dockerfile.dev ./server
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
