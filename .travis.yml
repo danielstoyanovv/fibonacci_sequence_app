@@ -22,7 +22,6 @@ before_install:
   - docker build -t stoyanov1234/fib-client:latest -t stoyanov1234/fib-client:$SHA  -f ./client/Dockerfile ./client
 
 script:
-  - gcloud auth list
   - docker push stoyanov1234/fib-server
   - docker push stoyanov1234/fib-client
   - docker push stoyanov1234/fib-server:$SHA
