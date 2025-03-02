@@ -9,6 +9,7 @@ before_install:
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
+  - echo ${GCLOUD_SERVICE_KEY} | base64 --decode -i > ./ruby/service-key.json
   - gcloud auth activate-service-account --key-file ./ruby/service-account.json
   - gcloud --quiet config set project multi-k8s-451610
   - gcloud --quiet config set container/cluster multi-cluster
@@ -20,7 +21,6 @@ before_install:
 
   - docker build -t stoyanov1234/fib-server:latest -t stoyanov1234/fib-server:$SHA -f ./server/Dockerfile.dev  ./server
   - docker build -t stoyanov1234/fib-client:latest -t stoyanov1234/fib-client:$SHA  -f ./client/Dockerfile ./client
-
 script:
   - docker push stoyanov1234/fib-server
   - docker push stoyanov1234/fib-client
