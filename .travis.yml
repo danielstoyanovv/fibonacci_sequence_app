@@ -18,7 +18,6 @@ before_install:
 
   - docker build -t stoyanov1234/fib-server:latest -t stoyanov1234/fib-server:$SHA -f ./server/Dockerfile.dev  ./server
   - docker build -t stoyanov1234/fib-client:latest -t stoyanov1234/fib-client:$SHA  -f ./client/Dockerfile ./client
-
 script:
   - docker push stoyanov1234/fib-server
   - docker push stoyanov1234/fib-client
