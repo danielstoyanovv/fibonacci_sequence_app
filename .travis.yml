@@ -24,10 +24,8 @@ script:
   - docker push stoyanov1234/fib-client
   - docker push stoyanov1234/fib-server:$SHA
   - docker push stoyanov1234/fib-client:$SHA
-after_success:
-    # Run jest tests
+# Run jest tests
   - docker run danielstoyanovv/fib npm test
-
 before_deploy:
 #  - set -x  # Enable debugging
   - echo "Starting deployment..."
