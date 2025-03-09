@@ -41,7 +41,7 @@ export const number = async ( req: Request,  res: Response) => {
 }
 export const values = async ( req: Request,  res: Response) => {
     try {
-        const values = await database.query('SELECT number from values')
+        const values = await database.query('SELECT number, fibonacci_index_number from values')
         await redisClient.setEx("databaseValues", 600, JSON.stringify(values)); // Cache data for 10 minutes
         res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
@@ -85,7 +85,10 @@ export const createValue = async ( req: Request,  res: Response) => {
             })
         }
         await redisClient.hSet("values", number, fibonacciSequenceService.fib(number));
-        await database.query('INSERT INTO values(number) VALUES ($1)', [number])
+        const id = Math.floor(Math.random() * 10000)
+        const createdAt = new Date()
+        await database.query('INSERT INTO values(id, number, fibonacci_index_number, created_at) ' +
+            'VALUES ($1, $2, $3, $4)', [id, number, fibonacciSequenceService.fib(number), createdAt])
         await redisClient.del("databaseValues")
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,
