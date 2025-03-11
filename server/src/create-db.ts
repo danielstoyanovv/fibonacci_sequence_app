@@ -3,7 +3,6 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 import {LoggerService} from "./services/LoggerService";
-import database from "./config/database";
 const logger = new LoggerService().createLogger()
 
 const DB_NAME = process.env.NODE_ENV === 'test' ? process.env.PG_DB +  "_test" : process.env.PG_DB
@@ -23,9 +22,3 @@ const client = new Pool({
 client
     .query(`CREATE DATABASE ` + DB_NAME)
     .catch((err: any) => logger.error(err))
-database.on("connect", (client: any) => {
-    console.log("Postgres database established")
-    client
-        .query('CREATE TABLE IF NOT EXISTS values (id INT, number INT, fibonacci_index_number INT, created_at Date)')
-        .catch((err: any) => logger.error(err));
-});
