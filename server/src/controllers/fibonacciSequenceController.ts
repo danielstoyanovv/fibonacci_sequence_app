@@ -87,7 +87,7 @@ export const createValue = async ( req: Request,  res: Response) => {
         }
         await redisClient.hSet("values", number, fibonacciSequenceService.fib(number));
         const id = Math.floor(Math.random() * 10000)
-        manager
+        await manager
             .setId(id)
             .setNumber(number)
             .createValue()
