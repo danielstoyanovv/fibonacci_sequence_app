@@ -28,7 +28,7 @@ export class ValueManager {
 
     /**
      * Set value number
-     * @return {string}
+     * @return {this}
      */
     setNumber(number: number) {
         this.#number = number
