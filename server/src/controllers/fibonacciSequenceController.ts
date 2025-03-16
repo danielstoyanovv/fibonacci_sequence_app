@@ -13,11 +13,12 @@ import {FibonacciSequenceService} from "../services/FibonacciSequenceService";
 import database from "../config/database";
 import {RedisServerService} from "../services/RedisServerService";
 import {LoggerService} from "../services/LoggerService";
-
+import {ValueManager} from "../utils/ValueManager";
 const redisClient = new RedisServerService().getRedisClient
 const logger = new LoggerService().createLogger()
 
 const fibonacciSequenceService = new FibonacciSequenceService
+const manager = new ValueManager()
 
 export const number = async ( req: Request,  res: Response) => {
     try {
@@ -86,9 +87,10 @@ export const createValue = async ( req: Request,  res: Response) => {
         }
         await redisClient.hSet("values", number, fibonacciSequenceService.fib(number));
         const id = Math.floor(Math.random() * 10000)
-        const createdAt = new Date()
-        await database.query('INSERT INTO values(id, number, fibonacci_index_number, created_at) ' +
-            'VALUES ($1, $2, $3, $4)', [id, number, fibonacciSequenceService.fib(number), createdAt])
+        manager
+            .setId(id)
+            .setNumber(number)
+            .createValue()
         await redisClient.del("databaseValues")
         return res.status(STATUS_OK).json({
             status: MESSEGE_SUCCESS,

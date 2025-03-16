@@ -18,7 +18,11 @@ const logger = new LoggerService().createLogger()
 database.on("connect", (client: any) => {
     console.log("Postgres database established")
     client
-        .query('CREATE TABLE IF NOT EXISTS values (id INT, number INT, fibonacci_index_number INT, created_at Date)')
+        .query('CREATE TABLE IF NOT EXISTS values (' +
+            'id SERIAL PRIMARY KEY, ' +
+            'number INT, ' +
+            'fibonacci_index_number INT, ' +
+            'created_at Date)')
         .catch((err: any) => logger.error(err));
 });
 
