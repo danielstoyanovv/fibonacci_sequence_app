@@ -10,6 +10,7 @@ import {DatabaseConnectionError} from "./errors/database-connection-error";
 import {errorHandler} from "./middlewares/error-handler";
 import {numberRouter} from "./routes/number";
 import {valuesRouter} from "./routes/values";
+import {currentRouter} from "./routes/current";
 
 database
     .query('CREATE TABLE IF NOT EXISTS values (' +
@@ -30,11 +31,11 @@ app.use(cors())
 
 app.use(helmet())
 
+app.use(currentRouter)
 app.use(valuesRouter)
 app.use(numberRouter)
 app.use(errorHandler)
-//
-// app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", current)
+
 //
 // app.post("/" + API_PREFIX + "/" + API_VERSION + "/values", createValue)
 app.listen(port, () => {
