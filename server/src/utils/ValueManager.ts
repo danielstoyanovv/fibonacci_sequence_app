@@ -2,7 +2,6 @@
 
 import database from "../config/database";
 import {FibonacciSequenceService} from "../services/FibonacciSequenceService";
-const fibonacciSequenceService = new FibonacciSequenceService()
 
 export class ValueManager {
     #id: number
@@ -51,6 +50,6 @@ export class ValueManager {
         const createdAt = new Date()
         await database.query('INSERT INTO values(id, number, fibonacci_index_number, created_at) ' +
             'VALUES ($1, $2, $3, $4)',
-            [this.getId(), this.getNumber(), fibonacciSequenceService.fib(this.getNumber()), createdAt])
+            [this.getId(), this.getNumber(), await FibonacciSequenceService.fib(this.getNumber()), createdAt])
     }
 }

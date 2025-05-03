@@ -10,7 +10,7 @@ import {
     STATUS_OK
 } from "../constants/data"
 import {RedisServerService} from "../services/RedisServerService";
-export const getDatabaseValuesFromCacheMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+export const getDatabaseValuesFromCache = async (req: Request, res: Response, next: NextFunction) => {
     const redisClient = new RedisServerService().getRedisClient
     const cachedData = await redisClient.get("databaseValues");
     if (cachedData) {
