@@ -9,6 +9,7 @@ import helmet from "helmet";
 import {DatabaseConnectionError} from "./errors/database-connection-error";
 import {errorHandler} from "./middlewares/error-handler";
 import {numberRouter} from "./routes/number";
+import {valuesRouter} from "./routes/values";
 
 database
     .query('CREATE TABLE IF NOT EXISTS values (' +
@@ -29,12 +30,9 @@ app.use(cors())
 
 app.use(helmet())
 
+app.use(valuesRouter)
 app.use(numberRouter)
 app.use(errorHandler)
-//
-// app.post("/" + API_PREFIX + "/" + API_VERSION + "/fibonacci-sequence-index-number", number)
-//
-// app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/all", getDatabaseValuesFromCache, values)
 //
 // app.get("/" + API_PREFIX + "/" + API_VERSION + "/values/current", current)
 //
